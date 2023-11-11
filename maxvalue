@@ -1,0 +1,35 @@
+public class GenericMaxFinder {
+
+    public static <T extends Comparable<T>> T findMax(T[] array) {
+        if (array == null || array.length == 0) {
+            return null; 
+        }
+
+        T max = array[0];
+
+        for (int i = 1; i < array.length; i++) {
+            if (array[i].compareTo(max) > 0) {
+                max = array[i];
+            }
+        }
+
+        return max;
+    }
+
+    public static void main(String[] args) {
+       
+        Integer[] intArray = {3, 1, 4, 1, 5, 9, 2, 6, 5};
+        Integer maxInt = findMax(intArray);
+        System.out.println("Maximum integer: " + maxInt);
+
+       
+        Double[] doubleArray = {3.14, 2.71, 1.618, 0.577, 2.302};
+        Double maxDouble = findMax(doubleArray);
+        System.out.println("Maximum double: " + maxDouble);
+
+        
+        String[] stringArray = {"apple", "orange", "banana", "kiwi"};
+        String maxString = findMax(stringArray);
+        System.out.println("Maximum string: " + maxString);
+    }
+}
