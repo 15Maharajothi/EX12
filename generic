@@ -1,0 +1,83 @@
+import java.util.Arrays;
+
+class GenericArrayOperations<T> {
+    private Object[] array;
+    private int size;
+    private static final int DEFAULT_CAPACITY = 10;
+
+    public GenericArrayOperations() {
+        this.array = new Object[DEFAULT_CAPACITY];
+        this.size = 0;
+    }
+
+
+    public void addAtBeginning(T element) {
+        ensureCapacity();
+        System.arraycopy(array, 0, array, 1, size);
+        array[0] = element;
+        size++;
+    }
+
+  
+    public void addAtMiddle(int position, T element) {
+        if (position < 0 || position > size) {
+            throw new IndexOutOfBoundsException("Invalid position");
+        }
+        ensureCapacity();
+        System.arraycopy(array, position, array, position + 1, size - position);
+        array[position] = element;
+        size++;
+    }
+
+
+    public void addAtEnd(T element) {
+        ensureCapacity();
+        array[size++] = element;
+    }
+
+   
+    public void deleteAtPosition(int position) {
+        if (position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException("Invalid position");
+        }
+        System.arraycopy(array, position + 1, array, position, size - position - 1);
+        size--;
+    }
+
+    private void ensureCapacity() {
+        if (size == array.length) {
+            array = Arrays.copyOf(array, 2 * size);
+        }
+    }
+
+    public void display() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        GenericArrayOperations<Integer> arrayOps = new GenericArrayOperations<>();
+
+        // Adding elements
+        arrayOps.addAtEnd(1);
+        arrayOps.addAtEnd(2);
+        arrayOps.addAtEnd(4);
+        arrayOps.addAtBeginning(0);
+        arrayOps.addAtMiddle(2, 3);
+
+       
+        System.out.print("Array after adding elements: ");
+        arrayOps.display();
+
+  
+        arrayOps.deleteAtPosition(3);
+
+     
+        System.out.print("Array after deleting element at position 3: ");
+        arrayOps.display();
+    }
+}
